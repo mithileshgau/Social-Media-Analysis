@@ -1,54 +1,61 @@
-# TopicBubbler
+# TopicBubbler: Visual Analytics for Hierarchical Social Media Exploration
 
-An interactive visual analytics system for cross-level fine-grained exploration of social media data.
+TopicBubbler is an interactive visual analytics system designed for the cross-level, fine-grained exploration of large-scale social media datasets. By leveraging hierarchical topic modeling and advanced NLP pipelines, it enables users to navigate complex conversational landscapes and extract actionable insights through intuitive, multi-coordinated views.
 
-## Overview
+## 🚀 Key Features
 
-TopicBubbler is a pioneering solution designed to navigate and extract insights from the vast landscape of social media data. With its hierarchical structure and cross-level exploration capabilities, this system empowers users to analyze social media content with precision and depth.
+*   **Hierarchical Structure Exploration**: A radial tree visualization representing a "Dual-LDA" hierarchy, allowing users to drill down from broad categories to granular sub-topics.
+*   **Temporal Trend Analysis**: Interactive timelines that visualize the evolution of topics and keywords over time.
+*   **Keyword Salience & Correlation**: Integrated bubble plots and correlation matrices to identify significant terms and their semantic relationships.
+*   **Narrative Construction**: An event evolution view that allows users to select keywords and construct narrative timelines of social media discourse.
+*   **Document Contextualization**: Direct access to original social media documents for qualitative validation of quantitative patterns.
 
-## Features
+---
 
-- **Hierarchical Structure View**: A radial tree diagram presenting the visual hierarchy of topics.  
+## 🧠 Technical Architecture
 
-  ![Hierarchical Structure View](images/hierarchical_view.png)
+TopicBubbler employs a robust backend designed for efficient text processing and analytical depth.
 
-- **Temporal View**: Provides insights into temporal trends across hierarchical levels.  
+### 1. NLP Preprocessing Pipeline
+The system transforms raw social media data through a rigorous multi-stage pipeline:
+*   **Sanitization**: Removal of hyperlinks, specialized symbols, user tags, and hashtags using optimized regular expressions.
+*   **Tokenization & Stop-word Removal**: Text is broken into unigrams, with common conversational noise filtered out using NLTK's standardized corpora.
+*   **Stemming**: Implementation of the Porter Stemmer to reduce words to their base forms (e.g., "shopping" and "shopped" to "shop").
+*   **Dictionary Filtering**: Verification against a validated dictionary to ensure keyword relevance and reduce noise.
 
-  ![Temporal View](images/temporal_view.png)
+### 2. Hierarchical Topic Modeling (Dual-LDA)
+At the core of TopicBubbler is a **Dual-LDA** (Latent Dirichlet Allocation) approach:
+*   **Level 1 (Global Topics)**: Documents are classified into 10 high-level themes (e.g., Global Economy, Health Measures).
+*   **Level 2 (Granular Sub-topics)**: Each global topic is further partitioned into 3 distinct sub-topics, facilitating a hierarchical "parent-child" relationship for deeper exploration.
 
-- **Fine-grained Exploration View**: Facilitates correlation analysis through bubble plots.  
+### 3. Keyword Salience with TextRank
+To identify the most "essential" words within a topic, the system implements a **TextRank** algorithm. By constructing word-co-occurrence graphs and applying the PageRank algorithm, TopicBubbler calculates a salience score for every keyword, ensuring that visualization components highlight terms with the highest informational density.
 
-  ![Fine-grained Exploration View](images/fine_grained_view.png)
+---
 
-- **Document View**: Entry point for examining original comment documents.
+## 🛠️ Technology Stack
 
-  ![Document View](images/document_view.png)
+*   **Frontend**: HTML5, CSS3, JavaScript (D3.js for visual analytics).
+*   **Backend**: FastAPI (Python) for high-performance asynchronous data processing.
+*   **Analytics**: Gensim (LDA modeling), NLTK (Text processing), NetworkX (Graph-based keyword ranking).
+*   **Data**: Pandas & PyArrow (Efficient parquet-to-CSV processing).
 
-- **Keyword Ranking View**: Analyze and arrange keywords based on intensity levels.  
+## 📊 Visualization Components
 
-  ![Keyword Ranking View](images/keyword_ranking_view.png)
+### Hierarchical Structure View
+Displays the visual hierarchy of topics in a radial tree format.
+![Hierarchical Structure View](images/hierarchical_view.png)
 
-- **Event Evolution View**: Construct narrative timelines by selecting keywords.  
+### Fine-grained Exploration View
+Facilitates correlation analysis through interactive bubble plots.
+![Fine-grained Exploration View](images/fine_grained_view.png)
 
-  ![Event Evolution View](images/event_evolution_view.png)
+### Temporal Evolution View
+Provides insights into temporal trends across different hierarchical levels.
+![Temporal View](images/temporal_view.png)
 
-## Dataset
+---
 
-The system utilizes coronavirus-related tweets from Hugging Face, covering July 2020 to December 2020. The dataset comprises 44,955 rows and 13 attributes.
+## 📈 Dataset
+The project currently utilizes a dataset of **44,955 coronavirus-related tweets** sourced from Hugging Face, spanning July 2020 to December 2020, processed for optimal visual exploration.
 
-## Technical Implementation
-
-- Data preprocessing pipeline converting parquet to CSV format.
-- Text standardization and sanitization.
-- LDA (Latent Dirichlet Allocation) algorithm for topic generation.
-- Keyword correlation calculation.
-- Dynamic data processing via FAST-API Python application.
-- Recommendation algorithms:
-    - **Relevance Recommendation Algorithm**
-    - **Frequency Recommendation Algorithm**
-
-## Extensions
-
-- Interactive tooltips for detailed insights.
-- Highlighting of recommended keywords.
-- Feature to remove mistakenly selected keywords.
